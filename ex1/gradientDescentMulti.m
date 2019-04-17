@@ -16,17 +16,10 @@ for iter = 1:num_iters
     % Hint: While debugging, it can be useful to print out the values
     %       of the cost function (computeCostMulti) and gradient here.
     %
-
-
-
-
-
-
-
-
-
-
-
+    for feature = 1:size(X, 2)
+        theta(feature) = theta(feature) - alpha / m ...
+            * sum((X * theta - y) .* X(:,feature));
+    end
     % ============================================================
 
     % Save the cost J in every iteration    
