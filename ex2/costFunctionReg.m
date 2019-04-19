@@ -17,10 +17,12 @@ grad = zeros(size(theta));
 %               Compute the partial derivatives and set grad to the partial
 %               derivatives of the cost w.r.t. each parameter in theta
 
+% Call the initial unregularized cost function.
+[J, grad] = costFunction(theta, X, y);
 
-
-
-
+% Add it with extra terms for regularized cost function.
+J = J + lambda * sum(theta(2:end) .^ 2) / (2 * m);
+grad(2:end) = grad(2:end) + lambda / m * theta(2:end);
 
 % =============================================================
 
