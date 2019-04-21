@@ -218,3 +218,16 @@ end
 
 fprintf('Program paused. Press enter to continue.\n');
 pause;
+
+%% =========== Part 9: Computing the test set error =============
+%  Compute the test set error using the best value of lambda 
+%  (lambda = 3)
+
+% Train on model with lambda = 3
+lambda = 3;
+opt_theta = trainLinearReg(X_poly, y, lambda);
+test_error = linearRegCostFunction(X_poly_test, ytest, opt_theta, 0);
+
+fprintf('Accuracy of model on test dataset: %f%', test_error);
+
+
