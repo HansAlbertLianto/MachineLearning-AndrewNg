@@ -50,14 +50,23 @@ error_val   = zeros(m, 1);
 %           
 %       end
 %
-
 % ---------------------- Sample Solution ----------------------
 
-
-
-
-
-
+% m training examples
+for i = 1:m
+    % Get i training examples
+    train_set_X = X(1:i, :);
+    train_set_y = y(1:i);
+    
+    % Train with i training examples
+    theta_train_i = trainLinearReg(train_set_X, train_set_y, lambda);
+    
+    % Find errors
+    error_train(i) = linearRegCostFunction(train_set_X, train_set_y, ...
+                     theta_train_i, 0);
+    error_val(i) = linearRegCostFunction(Xval, yval, ...
+                   theta_train_i, 0);
+end
 
 % -------------------------------------------------------------
 
