@@ -62,23 +62,21 @@ Theta2_grad = zeros(size(Theta2));
 %               and Theta2_grad from Part 2.
 %
 
+vector_y = zeros(m, num_labels);
 
+% Initialize results
+for index = 1:m
+    vector_y(index, y(index)) = 1;
+end
 
+% Get results by forward propagation
+hidden_layer_p = sigmoid([ones(size(X, 1), 1), X] * Theta1');
+vector_p = sigmoid([ones(size(hidden_layer_p, 1), 1), ...
+            hidden_layer_p] * Theta2');
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+% Compute cost
+J = sum(log(vector_p) .* (-vector_y) - ...
+    log(1 - vector_p) .* (1 - vector_y), 'all') / m;
 
 % -------------------------------------------------------------
 
