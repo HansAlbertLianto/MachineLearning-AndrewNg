@@ -78,6 +78,10 @@ vector_p = sigmoid([ones(size(hidden_layer_p, 1), 1), ...
 J = sum(log(vector_p) .* (-vector_y) - ...
     log(1 - vector_p) .* (1 - vector_y), 'all') / m;
 
+% Add regularization term
+J = J + (sum(Theta1(:,2:end) .^ 2, 'all') + ...
+    sum(Theta2(:,2:end) .^ 2, 'all')) * lambda / (2 * m);
+
 % -------------------------------------------------------------
 
 % =========================================================================
