@@ -84,6 +84,45 @@ J = J + (sum(Theta1(:,2:end) .^ 2, 'all') + ...
 
 % -------------------------------------------------------------
 
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% VARIABLE CONVENTIONS:                                               %
+%---------------------------------------------------------------------%
+%   - a_1 means the activation in the first (input) layer.            %
+%   - error_3 means the error in the third (output) layer.            %
+%   - delta_2 means the cumulative gradient sum in the second         %
+%     (hidden) layer.                                                 %
+%   - D_2 means the gradient terms in the second (hidden) layer.      %
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+delta_1 = zeros(size(Theta1));
+delta_2 = zeros(size(Theta2));
+
+for example = 1:m
+   % Forward propagation
+   a_1 = [1 X(example, :)];
+   z_2 = a_1 * Theta1';
+   a_2 = [1 sigmoid(z_2)];
+   z_3 = a_2 * Theta2';
+   a_3 = sigmoid(z_3);
+   
+   % Backward propagation
+   error_z3 = a_3 - vector_y(example, :);
+   error_a2 = error_z3 * Theta2;
+   error_z2 = error_a2(2:end) .* sigmoidGradient(z_2);
+   delta_2 = delta_2 + error_z3' * a_2;
+   delta_1 = delta_1 + error_z2' * a_1;
+end
+
+% Compute unregularized gradient
+Theta1_grad = delta_1 / m;
+Theta2_grad = delta_2 / m;
+
+% Compute regularized gradient
+Theta1_grad(:, 2:end) = Theta1_grad(:, 2:end) + ...
+    lambda / m * Theta1(:, 2:end);
+Theta2_grad(:, 2:end) = Theta2_grad(:, 2:end) + ...
+    lambda / m * Theta2(:, 2:end);
+
 % =========================================================================
 
 % Unroll gradients
