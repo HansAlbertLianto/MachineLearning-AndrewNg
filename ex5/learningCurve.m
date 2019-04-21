@@ -64,8 +64,7 @@ for i = 1:m
     % Find errors
     error_train(i) = linearRegCostFunction(train_set_X, train_set_y, ...
                      theta_train_i, 0);
-    error_val(i) = linearRegCostFunction(Xval, yval, ...
-                   theta_train_i, 0);
+    error_val(i) = linearRegCostFunction(Xval, yval, theta_train_i, 0);
 end
 
 % -------------------------------------------------------------
