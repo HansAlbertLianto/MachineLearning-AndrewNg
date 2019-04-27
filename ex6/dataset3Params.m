@@ -23,11 +23,24 @@ sigma = 0.3;
 %        mean(double(predictions ~= yval))
 %
 
+candidates_C = [0.01, 0.03, 0.1, 0.3, 1, 3, 10, 30];
+candidates_sigma = [0.01, 0.03, 0.1, 0.3, 1, 3, 10, 30];
+min_error = +inf;
 
-
-
-
-
+for index_c = 1:length(candidates_C)
+    for index_sigma = 1:length(candidates_sigma)
+        model = svmTrain(X, y, candidates_C(index_c), ...
+                @(x1, x2) gaussianKernel(x1, x2, ...
+                                         candidates_sigma(index_sigma)));
+        predict_y = svmPredict(model, Xval);
+        error = mean(double(predict_y ~= yval));
+        if error < min_error
+            C = candidates_C(index_c);
+            sigma = candidates_sigma(index_sigma);
+            min_error = error;
+        end
+    end
+end
 
 % =========================================================================
 
