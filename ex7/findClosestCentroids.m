@@ -21,11 +21,18 @@ idx = zeros(size(X,1), 1);
 % Note: You can use a for-loop over the examples to compute this.
 %
 
-
-
-
-
-
+for example = 1:size(X, 1)
+   min_mag = +inf;
+   idx(example) = 1;
+   for c_index = 1:K
+      diff = X(example,:) - centroids(c_index,:);
+      mag = sqrt(sum(diff .* diff));
+      if mag < min_mag
+         min_mag = mag;
+         idx(example) = c_index;
+      end
+   end
+end
 
 % =============================================================
 
